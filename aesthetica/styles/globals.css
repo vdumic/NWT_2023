@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Acme&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  background-color: #efefefd9;
+}
+
+h1 {
+  font-family: "DM Serif Display", serif;
+}
+
+p {
+  font-family: "Montserrat", sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input {
+  text-align: center;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+/*@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}*/
