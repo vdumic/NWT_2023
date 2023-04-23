@@ -1,8 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Postgres.js Example
 
-## Getting Started
+An example using [Postgres.js](https://github.com/porsager/postgres) in a Next.js project.
 
-First, run the development server:
+## Deploy your own
+
+Once you have access to [the environment variables you'll need](#configure-environment-variables), deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-postgres&project-name=with-postgres&repository-name=with-postgres&env=DATABASE_URL&envDescription=Required%20to%20connect%20the%20app%20with%20Postgres)
+
+## How to use
+
+Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+
+```bash
+npx create-next-app --example with-postgres with-postgres-app
+```
+
+```bash
+yarn create next-app --example with-postgres with-postgres-app
+```
+
+```bash
+pnpm create next-app --example with-postgres with-postgres-app
+```
+
+## Configuration
+
+### Set up a Postgres database
+
+Set up a Postgres database locally or use your favorite provider.
+
+### Configure environment variables
+
+Copy the `.env.local.example` file in this directory to `.env.local` (this will be ignored by Git):
+
+```bash
+cp .env.local.example .env.local
+```
+
+Set the `DATABASE_URL` variable in `.env.local` to the connection uri of your postgres database.
+
+### Apply migrations
+
+To setup up the migrations, use:
+
+```bash
+npm run migrate:up
+# or
+yarn migrate:up
+```
+
+### Start Next.js in development mode
 
 ```bash
 npm run dev
@@ -10,25 +58,8 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Your app should now be up and running on [http://localhost:3000](http://localhost:3000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).

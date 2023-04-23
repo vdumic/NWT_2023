@@ -10,8 +10,12 @@ import ProductImages from "../../../components/Store/Product/ProductImages";
 import ProductInformation from "../../../components/Store/Product/ProductInformation";
 import ProductDescription from "../../../components/Store/Product/ProductDescription";
 import ProductDimensions from "../../../components/Store/Product/ProductDimensions";
+import Spacer from "../../../components/Spacer";
+import Comment from "../../../components/Store/Product/Comment";
 
-const ProductPage = ({ product }) => {
+const submitComment = (slug, text) => {};
+
+const ProductPage = ({ product, comments }) => {
   return (
     <HeaderFooterLayout title="Aesthetica / Store">
       <div className="flex justify-start max-w-full mx-24 sm:mx-8 lg:my-10 sm:my-6 md:my-6 md:mx-10">
@@ -62,6 +66,18 @@ const ProductPage = ({ product }) => {
           className="my-5 sm:mx-8 md:h-[500px] md:w-[500px] sm:h-[300px] sm:w-[300px] md:mx-10"
         />
       </div>
+      <Spacer />
+      <div className="flex justify-start py-10 mx-10">
+        <form onSubmit={submitComment}>
+          <label htmlFor="Insert comment">Comment</label>
+          <input type="text" name="comment" id="comment" />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+      <Spacer />
+      <div>
+        <Comment comment={comments[0]} />
+      </div>
     </HeaderFooterLayout>
   );
 };
@@ -85,12 +101,16 @@ export async function getStaticProps(context) {
   const { slug } = context.params;
   const product = await getProductBySlug(slug);
 
+  const resp = await fetch(
+    `http://localhost:3000/api/comments/${product.slug}`
+  );
+
   product.mdxDescription = await serialize(product.description);
   product.mdxDimensions = await serialize(product.dimensions);
   delete product.description;
   delete product.dimensions;
 
   return {
-    props: { product: product },
+    props: { product: product, comments: await resp.json() },
   };
 }
