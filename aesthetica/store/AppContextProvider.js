@@ -12,14 +12,25 @@ const defaultAppState = {
 
 const appReducer = (state, action) => {
   if (action.type === "LOGIN") {
-    return {
-      userState: {
-        itemsNumber: state.userState.itemsNumber,
-        cartItems: state.userState.cartItems,
-        wishlistItems: state.userState.wishlistItems,
-        isLoggedIn: true,
-      },
-    };
+    if (action.value.validation) {
+      return {
+        userState: {
+          itemsNumber: state.userState.itemsNumber,
+          cartItems: state.userState.cartItems,
+          wishlistItems: state.userState.wishlistItems,
+          isLoggedIn: true,
+        },
+      };
+    } else {
+      return {
+        userState: {
+          itemsNumber: state.userState.itemsNumber,
+          cartItems: state.userState.cartItems,
+          wishlistItems: state.userState.wishlistItems,
+          isLoggedIn: false,
+        },
+      };
+    }
   }
 
   if (action.type === "LOGOUT") {
@@ -205,8 +216,8 @@ const appReducer = (state, action) => {
 const AppContextProvider = (props) => {
   const [appState, dispatchAction] = useReducer(appReducer, defaultAppState);
 
-  const loginHandler = () => {
-    dispatchAction({ type: "LOGIN" });
+  const loginHandler = (validation) => {
+    dispatchAction({ type: "LOGIN", value: { validation } });
   };
 
   const logoutHandler = () => {
