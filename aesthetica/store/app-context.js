@@ -13,6 +13,7 @@ const AppContext = React.createContext({
     cartItems: [],
     wishlistItems: [],
     isLoggedIn: false,
+    email: "",
   },
 });
 

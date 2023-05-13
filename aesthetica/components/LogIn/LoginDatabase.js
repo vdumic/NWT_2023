@@ -18,7 +18,7 @@ const LoginDatabase = () => {
 
     validation.toString();
 
-    appCtx.handleLogin(validation);
+    appCtx.handleLogin(validation, email);
   };
 
   const handleLoginClick = (e) => {

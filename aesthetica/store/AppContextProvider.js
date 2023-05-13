@@ -19,6 +19,7 @@ const appReducer = (state, action) => {
           cartItems: state.userState.cartItems,
           wishlistItems: state.userState.wishlistItems,
           isLoggedIn: true,
+          email: action.value.email,
         },
       };
     } else {
@@ -28,6 +29,7 @@ const appReducer = (state, action) => {
           cartItems: state.userState.cartItems,
           wishlistItems: state.userState.wishlistItems,
           isLoggedIn: false,
+          email: "",
         },
       };
     }
@@ -40,6 +42,7 @@ const appReducer = (state, action) => {
         cartItems: state.userState.cartItems,
         wishlistItems: state.userState.wishlistItems,
         isLoggedIn: false,
+        email: "",
       },
     };
   }
@@ -59,6 +62,7 @@ const appReducer = (state, action) => {
           cartItems: state.userState.cartItems,
           wishlistItems: state.userState.wishlistItems,
           isLoggedIn: state.userState.isLoggedIn,
+          email: state.userState.email,
         },
       };
     } else if (state.userState.cartItems.length === 0) {
@@ -76,6 +80,7 @@ const appReducer = (state, action) => {
           ],
           wishlistItems: state.userState.wishlistItems,
           isLoggedIn: state.userState.isLoggedIn,
+          email: state.userState.email,
         },
       };
     } else
@@ -94,6 +99,7 @@ const appReducer = (state, action) => {
           ],
           wishlistItems: state.userState.wishlistItems,
           isLoggedIn: state.userState.isLoggedIn,
+          email: state.userState.email,
         },
       };
   }
@@ -110,6 +116,7 @@ const appReducer = (state, action) => {
         ),
         wishlistItems: state.userState.wishlistItems,
         isLoggedIn: state.userState.isLoggedIn,
+        email: state.userState.email,
       },
     };
   }
@@ -126,6 +133,7 @@ const appReducer = (state, action) => {
           cartItems: state.userState.cartItems,
           wishlistItems: state.userState.wishlistItems,
           isLoggedIn: state.userState.isLoggedIn,
+          email: state.userState.email,
         },
       };
     }
@@ -144,6 +152,7 @@ const appReducer = (state, action) => {
             ],
           ],
           isLoggedIn: state.userState.isLoggedIn,
+          email: state.userState.email,
         },
       };
     } else
@@ -162,6 +171,7 @@ const appReducer = (state, action) => {
             ],
           ],
           isLoggedIn: state.userState.isLoggedIn,
+          email: state.userState.email,
         },
       };
   }
@@ -175,6 +185,7 @@ const appReducer = (state, action) => {
           (product) => product[0] !== action.value.slug
         ),
         isLoggedIn: state.userState.isLoggedIn,
+        email: state.userState.email,
       },
     };
   }
@@ -208,6 +219,7 @@ const appReducer = (state, action) => {
         ],
         wishlistItems: state.userState.wishlistItems,
         isLoggedIn: state.userState.isLoggedIn,
+        email: state.userState.email,
       },
     };
   }
@@ -216,8 +228,8 @@ const appReducer = (state, action) => {
 const AppContextProvider = (props) => {
   const [appState, dispatchAction] = useReducer(appReducer, defaultAppState);
 
-  const loginHandler = (validation) => {
-    dispatchAction({ type: "LOGIN", value: { validation } });
+  const loginHandler = (validation, email) => {
+    dispatchAction({ type: "LOGIN", value: { validation, email } });
   };
 
   const logoutHandler = () => {
