@@ -4,7 +4,7 @@ import Image from "next/image";
 import { serialize } from "next-mdx-remote/serialize";
 import { AiOutlineRight } from "react-icons/ai";
 
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import { getAllProductSlugs, getProductBySlug } from "../../api/ContentfulAPI";
 import HeaderFooterLayout from "../../../layouts/HeaderFooterLayout";
@@ -17,7 +17,7 @@ import Comment from "../../../components/Store/Product/Comment";
 
 import AppContext from "../../../store/app-context";
 
-const ProductPage = ({ product, comments }) => {
+const ProductPage = ({ product }) => {
   // const [comments, setComments] = useState([]);
 
   // const getComments = async () => {
@@ -35,10 +35,16 @@ const ProductPage = ({ product, comments }) => {
   // }, []);
 
   const [commentText, setCommentText] = useState("");
+  const [comments, setComments] = useState([]);
 
   const appCtx = useContext(AppContext);
 
-  console.log(appCtx.userData.email);
+  const getComments = async () => {
+    const resp = await fetch(
+      `http://localhost:3000/api/comments/${product.slug}`
+    );
+    setComments(await resp.json());
+  };
 
   const submitComment = async (e) => {
     e.preventDefault();
@@ -56,7 +62,17 @@ const ProductPage = ({ product, comments }) => {
     );
 
     setCommentText("");
+
+    await getComments();
   };
+
+  const handleCommentChange = async () => {
+    await getComments();
+  };
+
+  useEffect(() => {
+    getComments();
+  }, []);
 
   return (
     <HeaderFooterLayout title="Aesthetica / Store">
@@ -109,39 +125,50 @@ const ProductPage = ({ product, comments }) => {
         />
       </div>
 
-      {appCtx.userData.isLoggedIn && (
-        <>
-          <Spacer />
-          <div className="flex justify-start px-10 py-10">
-            <p>Insert new comment</p>
-          </div>
-          <div className="flex justify-start py-5 mx-10">
-            <form>
-              <label htmlFor="Insert comment"></label>
-              <input
-                type="text"
-                name="comment"
-                className="border-2 py-2 px-24"
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-              />
-              <button
-                className="flex justify-center bg-[#252526] hover:bg-[#3e3e42] hover:border-[#3e3e42] text-gray-100 font-medium mt-8 py-2 px-12 border-2 border-[#252526] rounded-full shadow-xl"
-                type="submit"
-                onClick={submitComment}
-              >
-                Submit
-              </button>
-            </form>
-          </div>
-        </>
-      )}
       <Spacer />
-      {comments.length > 0 && (
-        <div>
-          <Comment comment={comments[0]} slug={product.slug} />
-        </div>
-      )}
+      <div className="flex flex-col lg:mx-24 sm:mx-8 md:mx-10 mb-8">
+        <p className="my-6 font-semibold text-2xl">COMMENTS</p>
+        {comments.length > 0 && (
+          <div>
+            {comments.map((comment) => (
+              <Comment
+                comment={comment}
+                slug={product.slug}
+                commentChange={handleCommentChange}
+              />
+            ))}
+          </div>
+        )}
+        {comments.length === 0 && (
+          <p className="font-middle text-xl">No comments added!!</p>
+        )}
+        {appCtx.userData.isLoggedIn && (
+          <>
+            <div className="flex justify-start pt-10 pb-2">
+              <p className="font-semibold text-2xl">Insert new comment</p>
+            </div>
+            <div className="flex justify-start py-2">
+              <form>
+                <label htmlFor="Insert comment"></label>
+                <input
+                  type="text"
+                  name="comment"
+                  className="border-2 py-2 px-24"
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                />
+                <button
+                  className="flex justify-center bg-[#252526] hover:bg-[#3e3e42] hover:border-[#3e3e42] text-gray-100 font-medium mt-8 py-2 px-12 border-2 border-[#252526] rounded-full shadow-xl"
+                  type="submit"
+                  onClick={submitComment}
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
+          </>
+        )}
+      </div>
     </HeaderFooterLayout>
   );
 };
@@ -165,16 +192,12 @@ export async function getStaticProps(context) {
   const { slug } = context.params;
   const product = await getProductBySlug(slug);
 
-  const resp = await fetch(
-    `http://localhost:3000/api/comments/${product.slug}`
-  );
-
   product.mdxDescription = await serialize(product.description);
   product.mdxDimensions = await serialize(product.dimensions);
   delete product.description;
   delete product.dimensions;
 
   return {
-    props: { product: product, comments: await resp.json() },
+    props: { product: product },
   };
 }

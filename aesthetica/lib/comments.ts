@@ -16,11 +16,10 @@ export async function list(slug: string) {
   `;
 }
 
-export async function remove(slug: string) {
+export async function remove(id: string) {
   return await sql<Comment[]>`
     DELETE FROM comments 
-    WHERE productslug = ${slug}
-    RETURNING id, text
+    WHERE id = ${id}
   `;
 }
 
@@ -31,8 +30,8 @@ export async function add(slug: string, email: string, text: string) {
   `;
 }
 
-export async function edit(slug: string, text: string) {
+export async function edit(id: string, text: string) {
   return await sql`
-    UPDATE comments SET text=${text} WHERE productslug=${slug}
+    UPDATE comments SET text=${text} WHERE id=${id}
   `;
 }
