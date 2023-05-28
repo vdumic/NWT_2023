@@ -111,7 +111,7 @@ const ProductPage = ({ product }) => {
           // style={{ objectFit: "cover" }}
           width="500"
           height="500"
-          className="m-5 mr-28 sm:hidden md:hidden h-[500px] w-[500px]"
+          className="m-5 mr-28 sm:hidden md:hidden h-[450px] w-[450px]"
         />
       </div>
       <div className="lg:hidden">
@@ -121,7 +121,7 @@ const ProductPage = ({ product }) => {
           // style={{ objectFit: "cover" }}
           width="500"
           height="500"
-          className="my-5 sm:mx-8 md:h-[500px] md:w-[500px] sm:h-[300px] sm:w-[300px] md:mx-10"
+          className="pb-10 sm:mx-11 md:h-[500px] md:w-[500px] sm:h-[300px] sm:w-[300px] md:mx-10"
         />
       </div>
 
@@ -145,7 +145,7 @@ const ProductPage = ({ product }) => {
         {appCtx.userData.isLoggedIn && (
           <>
             <div className="flex justify-start pt-10 pb-2">
-              <p className="font-semibold text-2xl">Insert new comment</p>
+              <p className="font-semibold text-2xl">Tell us what you think, write a comment:</p>
             </div>
             <div className="flex justify-start py-2">
               <form>
@@ -153,7 +153,7 @@ const ProductPage = ({ product }) => {
                 <input
                   type="text"
                   name="comment"
-                  className="border-2 py-2 px-24"
+                  className="border-2 py-2 px-24 sm:px-8 sm:w-80 w-96"
                   value={commentText}
                   onChange={(e) => setCommentText(e.target.value)}
                 />
@@ -162,7 +162,7 @@ const ProductPage = ({ product }) => {
                   type="submit"
                   onClick={submitComment}
                 >
-                  Submit
+                  Publish
                 </button>
               </form>
             </div>
